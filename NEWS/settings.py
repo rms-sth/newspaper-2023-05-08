@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "newspaper",
+    "blog_app",
+    "django_summernote",
+    "rest_framework",
+    "api",
 ]
 
 MIDDLEWARE = [
@@ -133,4 +137,12 @@ MESSAGE_TAGS = {
     messages.SUCCESS: "success",
     messages.WARNING: "warning",
     messages.ERROR: "danger",
+}
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+SUMMERNOTE_CONFIG = {
+    "width": "100%",
+    "height": "600",
 }

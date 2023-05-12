@@ -80,7 +80,6 @@
     <script src="{% static 'aznews/assets/js/jquery.form.js' %}"></script>
     <script src="{% static 'aznews/assets/js/jquery.validate.min.js' %}"></script>
     <script src="{% static 'aznews/assets/js/mail-script.js' %}"></script>
-    <script src="{% static 'aznews/assets/js/jquery.ajaxchimp.min.js' %}"></script>
  
     <!-- Jquery Plugins, main Jquery -->
     <script src="{% static 'aznews/assets/js/plugins.js' %}"></script>
@@ -98,14 +97,14 @@
               success: function(response) {
                   $("#newsletter_side_form_message").append(
                       `
-                              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                ${response.message}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              
-                              `
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                      ${response.message}
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    
+                                    `
                   )
                   setTimeout(function() {
                       $('.alert').alert('close')
@@ -114,14 +113,14 @@
               error: function(response) {
                   $("#newsletter_side_form_message").append(
                       `
-                              <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                ${response.responseJSON.message}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              
-                              `
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                      ${response.responseJSON.message}
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    
+                                    `
                   )
                   setTimeout(function() {
                       $('.alert').alert('close')
@@ -131,6 +130,62 @@
           })
 
       })
+
+
+      $("#newsletter_bottom_form").submit(function(e) {
+          e.preventDefault();
+          let serializedData = $(this).serialize();
+          console.log(serializedData)
+
+          $.ajax({
+              type: "POST",
+              data: serializedData,
+              url: "{% url 'newsletter' %}",
+              success: function(response) {
+                  $("#newsletter_bottom_form_message").append(
+                      `
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                      ${response.message}
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    
+                                    `
+                  )
+                  setTimeout(function() {
+                      $('.alert').alert('close')
+                  }, 2000)
+              },
+              error: function(response) {
+                  $("#newsletter_bottom_form_message").append(
+                      `
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                      ${response.responseJSON.message}
+                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    
+                                    `
+                  )
+                  setTimeout(function() {
+                      $('.alert').alert('close')
+                  }, 2000)
+              }
+
+          })
+
+      })
+
+      fetch('https://reqbin.com/echo/get/json', {
+              method: 'GET',
+              headers: {
+                  'Accept': 'application/json',
+              },
+          })
+          .then(response => response.json())
+          .then(response => console.log(JSON.stringify(response)))
     </script>
 
     {% block extra_js %}
